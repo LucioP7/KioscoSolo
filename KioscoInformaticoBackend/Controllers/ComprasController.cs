@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend.DataContext;
 using Service.Models;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
+using System.ComponentModel;
 
 namespace Backend.Controllers
 {
@@ -23,9 +25,10 @@ namespace Backend.Controllers
 
         // GET: api/Compras
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Compra>>> GetCompras()
+        public async Task<ActionResult<IEnumerable<Compra>>> GetCompras([FromQuery] string? filtro = "")
         {
-            return await _context.Compras.ToListAsync();
+            return await _context.Compras.Include(c => c.Proveedor)
+                    .Where(c => c.Proveedor.Nombre.ToUpper().Contains(filtro.ToUpper())).ToListAsync();
         }
 
         // GET: api/Compras/5

@@ -24,8 +24,8 @@ namespace KioscoInformaticoDesktop.Views
         public IFormState deleteState;
         public IFormState currentState;
 
-        public IProveedorService proveedorService = new ProveedorService();
-        public ILocalidadService localidadService = new LocalidadService();
+        public IGenericService<Proveedor> proveedorService = new GenericService<Proveedor>();
+        public IGenericService<Localidad> localidadService = new GenericService<Localidad>();
         public BindingSource ListProveedores = new BindingSource();
         public Proveedor proveedorCurrent;
         public ProveedoresView()

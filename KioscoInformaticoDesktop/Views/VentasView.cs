@@ -18,7 +18,7 @@ namespace KioscoInformaticoDesktop.Views
 {
     public partial class VentasView : Form
     {
-        ClienteService clienteService = new ClienteService();
+        GenericService<Cliente> clienteService = new GenericService<Cliente>();
         ProductoService productoService = new ProductoService();
         GenericService<Venta> ventaService = new GenericService<Venta>();
         Venta venta = new Venta();
