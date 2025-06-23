@@ -8,13 +8,13 @@ namespace Desktop.Interfaces
 {
     public interface IFormState
     {
-        void OnBuscar(); //buscar
-        void OnAgregar(); //agregar
-        void OnModificar(); //editar
-        void OnEliminar(); //eliminar
-        void OnGuardar(); //guardar
-        void OnCancelar(); //cancelar
-        void OnSalir(); //salir 
+        void OnBuscar(); 
+        void OnAgregar(); 
+        void OnModificar();
+        void OnEliminar();
+        void OnGuardar(); 
+        void OnCancelar();
+        void OnSalir(); 
         Task UpdateUI(); 
     }
 }

@@ -38,20 +38,6 @@ namespace KioscoInformaticoDesktop.Views
 
             currentState = initialDisplayState;
             currentState.UpdateUI();
-            tabControl.Selecting += tabControl_Selecting;
-        }
-
-        private void tabControl_Selecting(object sender, TabControlCancelEventArgs e)
-        {
-            // Si el usuario intenta ir a la pestaña de agregar/editar manualmente
-            if (e.TabPage == tabPageAgregarEditar)
-            {
-                // Solo permite si el estado actual es AddState o EditState
-                if (!(currentState is AddState) && !(currentState is EditState))
-                {
-                    e.Cancel = true;
-                }
-            }
         }
 
         public void SetState(IFormState state)
@@ -68,59 +54,34 @@ namespace KioscoInformaticoDesktop.Views
         private async void btnGuardar_Click(object sender, EventArgs e)
         {
             currentState.OnGuardar();
-            //if (string.IsNullOrEmpty(txtNombre.Text))
-            //{
-            //    MessageBox.Show("El nombre de la localidad es obligatorio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return;
-            //}
-
-            //if (localidadCurrent != null)
-            //{
-            //    localidadCurrent.Nombre = txtNombre.Text;
-            //    await localidadService.UpdateAsync(localidadCurrent);
-            //    localidadCurrent = null;
-            //}
-            //else
-            //{
-            //    var localidad = new Localidad
-            //    {
-            //        Nombre = txtNombre.Text
-            //    };
-            //    await localidadService.AddAsync(localidad);
-            //}
-            //await CargarGrilla();
-            //txtNombre.Text = string.Empty;
-            //tabControl.SelectTab(tabPageLista);
-        }
+            }
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
             SetState(editState);
             currentState.OnModificar();
-            //localidadCurrent = (Localidad)listaLocalidades.Current;
-            //txtNombre.Text = localidadCurrent.Nombre;
-            //tabControl.SelectTab(tabPageAgregarEditar);
-        }
+            }
 
         private async void btnEliminar_Click(object sender, EventArgs e)
         {
             SetState(deleteState);
             currentState.OnEliminar();
-            
+
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             currentState.OnCancelar();
-            //localidadCurrent = null;
-            //txtNombre.Text = string.Empty;
-            //tabControl.SelectTab(tabPageLista);
-
         }
 
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
             currentState.OnBuscar();
+        }
+
+        private void iconButtonSalir_Click(object sender, EventArgs e)
+        {
+            currentState.OnSalir();
         }
     }
 }

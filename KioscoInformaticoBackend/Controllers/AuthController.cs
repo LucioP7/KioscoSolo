@@ -24,7 +24,7 @@ namespace Backend.Controllers
         {
             // Aquí deberías implementar la validación de credenciales
             // Por ejemplo, buscar en la base de datos y verificar el password
-            if (model.Username != "sofi" || model.Password != "123456")
+            if (model.Username != "usuario" || model.Password != "contraseña")
             {
                 return Unauthorized("Credenciales incorrectas");
             }
