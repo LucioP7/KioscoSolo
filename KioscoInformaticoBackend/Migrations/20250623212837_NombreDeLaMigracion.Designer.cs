@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace KioscoInformaticoBackend.Migrations
+namespace Backend.Migrations
 {
     [DbContext(typeof(KioscoContext))]
-    [Migration("20241024021713_inicio")]
-    partial class inicio
+    [Migration("20250623212837_NombreDeLaMigracion")]
+    partial class NombreDeLaMigracion
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -360,6 +360,9 @@ namespace KioscoInformaticoBackend.Migrations
                     b.Property<bool>("Eliminado")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("Imagen")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -379,6 +382,7 @@ namespace KioscoInformaticoBackend.Migrations
                         {
                             Id = 1,
                             Eliminado = false,
+                            Imagen = "",
                             Nombre = "Coca Cola 2lts",
                             Oferta = false,
                             Precio = 2650m
@@ -387,6 +391,7 @@ namespace KioscoInformaticoBackend.Migrations
                         {
                             Id = 2,
                             Eliminado = false,
+                            Imagen = "",
                             Nombre = "Sprite 2lts",
                             Oferta = false,
                             Precio = 2450m
@@ -395,6 +400,7 @@ namespace KioscoInformaticoBackend.Migrations
                         {
                             Id = 3,
                             Eliminado = false,
+                            Imagen = "",
                             Nombre = "Fanta 2lts",
                             Oferta = false,
                             Precio = 2550m
@@ -591,7 +597,7 @@ namespace KioscoInformaticoBackend.Migrations
                             Id = 1,
                             ClienteId = 1,
                             Eliminado = false,
-                            Fecha = new DateTime(2024, 10, 23, 23, 17, 12, 585, DateTimeKind.Local).AddTicks(3346),
+                            Fecha = new DateTime(2025, 6, 23, 18, 28, 36, 208, DateTimeKind.Local).AddTicks(307),
                             FormaPago = 0,
                             Iva = 21m,
                             Total = 3000m
@@ -601,7 +607,7 @@ namespace KioscoInformaticoBackend.Migrations
                             Id = 2,
                             ClienteId = 2,
                             Eliminado = false,
-                            Fecha = new DateTime(2024, 10, 23, 23, 17, 12, 585, DateTimeKind.Local).AddTicks(3364),
+                            Fecha = new DateTime(2025, 6, 23, 18, 28, 36, 208, DateTimeKind.Local).AddTicks(322),
                             FormaPago = 1,
                             Iva = 10m,
                             Total = 5000m
@@ -611,7 +617,7 @@ namespace KioscoInformaticoBackend.Migrations
                             Id = 3,
                             ClienteId = 1,
                             Eliminado = false,
-                            Fecha = new DateTime(2024, 10, 23, 23, 17, 12, 585, DateTimeKind.Local).AddTicks(3365),
+                            Fecha = new DateTime(2025, 6, 23, 18, 28, 36, 208, DateTimeKind.Local).AddTicks(324),
                             FormaPago = 2,
                             Iva = 21m,
                             Total = 8000m
