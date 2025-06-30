@@ -54,10 +54,6 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_ACDF7C7C89884E29B2A2823E36E3B66F }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5AC5501D0CF24DDFBE0AEE80C8EAC4E6 }}
 
-      - name: Set Azure App Settings
-        run: az webapp config appsettings set --name frontlucio --resource-group ASP-dataScangroup-b56c --settings GOOGLE_CREDENTIALS="${{ secrets.GOOGLE_CREDENTIALS }}"
-
-
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
