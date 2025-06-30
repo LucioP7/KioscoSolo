@@ -55,11 +55,8 @@ jobs:
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5AC5501D0CF24DDFBE0AEE80C8EAC4E6 }}
 
       - name: Set Azure App Settings
-        run: |
-          az webapp config appsettings set \
-            --name frontlucio \
-            --resource-group ASP-dataScangroup-b56c \
-            --settings GOOGLE_CREDENTIALS="${{ secrets.GOOGLE_CREDENTIALS }}"
+        run: az webapp config appsettings set --name frontlucio --resource-group ASP-dataScangroup-b56c --settings GOOGLE_CREDENTIALS="${{ secrets.GOOGLE_CREDENTIALS }}"
+
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
