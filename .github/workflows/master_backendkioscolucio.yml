@@ -65,6 +65,11 @@ jobs:
                 "name": "GOOGLE_CREDENTIALS",
                 "value": "${{ secrets.GOOGLE_CREDENTIALS }}",
                 "slotSetting": false
+              },
+              {
+                "name": "ConnectionStrings__mysqlRemoto",
+                "value": "${{ secrets.MYSQLREMOTO_CONNECTIONSTRING }}",
+                "slotSetting": false
               }
             ]
             
