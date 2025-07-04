@@ -57,7 +57,7 @@ jobs:
       - name: Set environment variable in Azure App Service
         uses: Azure/appservice-settings@v1
         with:
-          app-name: backendkioscolucio
+          app-name: 'backendkioscolucio'
           slot-name: Production
           app-settings-json: |
             [
