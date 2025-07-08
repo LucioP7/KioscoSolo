@@ -13,11 +13,11 @@ DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region Implementación propia de creacion de JWT propios
-//// Cargar configuración JWT del archivo de configuración
+#region Implementaciï¿½n propia de creacion de JWT propios
+//// Cargar configuraciï¿½n JWT del archivo de configuraciï¿½n
 //var jwtSettings = builder.Configuration.GetSection("Jwt");
 
-//// Configurar la autenticación
+//// Configurar la autenticaciï¿½n
 //builder.Services.AddAuthentication(options =>
 //{
 //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -72,7 +72,7 @@ var configuration = new ConfigurationBuilder()
 string cadenaConexion = configuration.GetConnectionString("mysqlRemoto");
 
 
-//configuración de inyección de dependencias del DBContext
+//configuraciï¿½n de inyecciï¿½n de dependencias del DBContext
 builder.Services.AddDbContext<KioscoContext>(
     options => options.UseMySql(cadenaConexion,
                                 ServerVersion.AutoDetect(cadenaConexion),
@@ -83,7 +83,7 @@ builder.Services.AddDbContext<KioscoContext>(
                                 ));
 
 
-// Configura el serializador JSON para manejar referencias cíclicas
+// Configura el serializador JSON para manejar referencias cï¿½clicas
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -123,14 +123,14 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Configurar una política de CORS
-// Configurar una política de CORS
+// Configurar una polï¿½tica de CORS
+// Configurar una polï¿½tica de CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins",
         builder => builder
-            .WithOrigins("https://backendkioscolucio.azurewebsites.net",
-                    "https://frontlucio.azurewebsites.net",
+            .WithOrigins("https://backlucio.azurewebsites.net",
+                    "https://backlucio.azurewebsites.net",
                     "https://localhost:7238")
             .AllowAnyHeader()
             .AllowAnyMethod());
