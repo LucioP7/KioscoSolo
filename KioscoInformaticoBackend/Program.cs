@@ -17,7 +17,7 @@ var firebaseJson = Environment.GetEnvironmentVariable("GOOGLE_CREDENTIALS");
 
 if (string.IsNullOrWhiteSpace(firebaseJson))
 {
-    throw new Exception("Falta la variable GOOGLE_CREDENTIALS");
+    throw new Exception("Faltaa la variable GOOGLE_CREDENTIALS");
 }
 
 var credential = GoogleCredential.FromJson(firebaseJson);
