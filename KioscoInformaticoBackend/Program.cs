@@ -13,34 +13,6 @@ DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region Implementaci�n propia de creacion de JWT propios
-//// Cargar configuraci�n JWT del archivo de configuraci�n
-//var jwtSettings = builder.Configuration.GetSection("Jwt");
-
-//// Configurar la autenticaci�n
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//})
-//.AddJwtBearer(options =>
-//{
-//    // Convertir la clave a bytes
-//    var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
-//    options.TokenValidationParameters = new TokenValidationParameters
-//    {
-//        ValidateIssuer = true,
-//        ValidateAudience = true,
-//        ValidateLifetime = true,
-//        ValidateIssuerSigningKey = true,
-//        ValidIssuer = jwtSettings["Issuer"],
-//        ValidAudience = jwtSettings["Audience"],
-//        IssuerSigningKey = new SymmetricSecurityKey(key)
-//    };
-//});
-
-#endregion
-
 var firebaseJson = Environment.GetEnvironmentVariable("GOOGLE_CREDENTIALS");
 
 if (string.IsNullOrWhiteSpace(firebaseJson))
