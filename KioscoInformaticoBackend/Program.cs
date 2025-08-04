@@ -39,8 +39,10 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 
 var configuration = new ConfigurationBuilder()
-        .AddJsonFile("appsettings.json")
-        .Build();
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables() // <- esta línea es clave
+    .Build();
+
 string cadenaConexion = configuration.GetConnectionString("mysqlRemoto");
 
 
