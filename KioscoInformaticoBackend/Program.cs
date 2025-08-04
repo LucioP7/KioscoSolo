@@ -103,8 +103,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins",
         builder => builder
-            .WithOrigins("https://backlucio.azurewebsites.net",
+            .WithOrigins("http://backlucio.azurewebsites.net",
                     "https://backlucio.azurewebsites.net",
+                    "https://backendlucio.azurewebsites.net",
+                    "http://backendlucio.azurewebsites.net",
                     "https://localhost:7238")
             .AllowAnyHeader()
             .AllowAnyMethod());

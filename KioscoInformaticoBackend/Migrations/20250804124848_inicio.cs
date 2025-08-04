@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class NombreDeLaMigracion : Migration
+    public partial class inicio : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -288,9 +288,9 @@ namespace Backend.Migrations
                 columns: new[] { "Id", "ClienteId", "Eliminado", "Fecha", "FormaPago", "Iva", "Total" },
                 values: new object[,]
                 {
-                    { 1, 1, false, new DateTime(2025, 6, 23, 18, 28, 36, 208, DateTimeKind.Local).AddTicks(307), 0, 21m, 3000m },
-                    { 2, 2, false, new DateTime(2025, 6, 23, 18, 28, 36, 208, DateTimeKind.Local).AddTicks(322), 1, 10m, 5000m },
-                    { 3, 1, false, new DateTime(2025, 6, 23, 18, 28, 36, 208, DateTimeKind.Local).AddTicks(324), 2, 21m, 8000m }
+                    { 1, 1, false, new DateTime(2025, 8, 4, 9, 48, 47, 102, DateTimeKind.Local).AddTicks(5275), 0, 21m, 3000m },
+                    { 2, 2, false, new DateTime(2025, 8, 4, 9, 48, 47, 102, DateTimeKind.Local).AddTicks(5290), 1, 10m, 5000m },
+                    { 3, 1, false, new DateTime(2025, 8, 4, 9, 48, 47, 102, DateTimeKind.Local).AddTicks(5293), 2, 21m, 8000m }
                 });
 
             migrationBuilder.InsertData(
