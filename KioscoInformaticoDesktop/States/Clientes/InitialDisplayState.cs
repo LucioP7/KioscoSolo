@@ -1,4 +1,5 @@
 using Desktop.Interfaces;
+using KioscoInformaticoDesktop;
 using KioscoInformaticoDesktop.Views;
 using Service.Interfaces;
 using Service.Services;
@@ -25,14 +26,16 @@ namespace Desktop.States.Clientes
         public async Task UpdateUI()
         {
             await CargarCombo();
-            var clientes = await _form.clienteService.GetAllAsync(string.Empty);
+            var token = MenuPrincipalView.jwtToken;
+            var clientes = await _form.clienteService.GetAllAsync(string.Empty, token);
             _form.ListClientes.DataSource = clientes;
             _form.dataGridClientesView.DataSource = _form.ListClientes;
             _form.tabControl.SelectTab(_form.tabPageLista);
         }
         private async Task CargarCombo()
         {
-            _form.comboLocalidades.DataSource = await _form.localidadService.GetAllAsync(string.Empty);
+            var token = MenuPrincipalView.jwtToken;
+            _form.comboLocalidades.DataSource = await _form.localidadService.GetAllAsync(string.Empty, token);
             _form.comboLocalidades.DisplayMember = "Nombre";
             _form.comboLocalidades.ValueMember = "Id";
         }

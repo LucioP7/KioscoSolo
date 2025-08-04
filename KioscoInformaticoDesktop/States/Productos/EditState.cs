@@ -1,4 +1,5 @@
 ﻿using Desktop.Interfaces;
+using KioscoInformaticoDesktop;
 using KioscoInformaticoDesktop.Views;
 using Service.Models;
 using System;
@@ -34,8 +35,8 @@ namespace Desktop.States.Productos
             _form.productoCurrent.Nombre = _form.txtNombre.Text;
             _form.productoCurrent.Precio = _form.numericPrecio.Value;
 
-
-            await _form.productoService.UpdateAsync(_form.productoCurrent);
+            var token = MenuPrincipalView.jwtToken;
+            await _form.productoService.UpdateAsync(_form.productoCurrent, token);
             _form.SetState(_form.initialDisplayState);
             await _form.currentState.UpdateUI();
         }

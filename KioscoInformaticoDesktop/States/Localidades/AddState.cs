@@ -1,4 +1,5 @@
 ﻿using Desktop.Interfaces;
+using KioscoInformaticoDesktop;
 using KioscoInformaticoDesktop.Views;
 using Service.Models;
 using System;
@@ -34,7 +35,8 @@ namespace Desktop.States.Localidades
             {
                 Nombre = _form.txtNombre.Text
             };
-            await _form.localidadService.AddAsync(localidad);
+            var token = MenuPrincipalView.jwtToken;
+            await _form.localidadService.AddAsync(localidad, token);
             _form.SetState(_form.initialDisplayState);
             await _form.currentState.UpdateUI();
         }

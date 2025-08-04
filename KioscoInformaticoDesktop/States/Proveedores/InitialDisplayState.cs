@@ -1,4 +1,5 @@
 using Desktop.Interfaces;
+using KioscoInformaticoDesktop;
 using KioscoInformaticoDesktop.Views;
 using Service.Interfaces;
 using Service.Services;
@@ -24,15 +25,17 @@ namespace Desktop.States.Proveedores
         }
         public async Task UpdateUI()
         {
+            var token = MenuPrincipalView.jwtToken;
             await CargarCombo();
-            var proveedores = await _form.proveedorService.GetAllAsync(null);
+            var proveedores = await _form.proveedorService.GetAllAsync(token, string.Empty);
             _form.ListProveedores.DataSource = proveedores;
             _form.dataGridProveedoresView.DataSource = _form.ListProveedores;
             _form.tabControl1.SelectTab(_form.tabPageLista);
         }
         private async Task CargarCombo()
         {
-            _form.comboLocalidades.DataSource = await _form.localidadService.GetAllAsync(string.Empty);
+            var token = MenuPrincipalView.jwtToken;
+            _form.comboLocalidades.DataSource = await _form.localidadService.GetAllAsync(token, string.Empty);
             _form.comboLocalidades.DisplayMember = "Nombre";
             _form.comboLocalidades.ValueMember = "Id";
             _form.comboLocalidades.SelectedIndex = -1;
