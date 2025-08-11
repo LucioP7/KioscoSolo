@@ -33,8 +33,7 @@ namespace Desktop.States.Proveedores
             _form.proveedorCurrent.Telefonos = _form.txtTelefonos.Text;
             _form.proveedorCurrent.Cbu = _form.txtCbu.Text;
             _form.proveedorCurrent.LocalidadId = (int)_form.comboLocalidades.SelectedValue;
-            var token = MenuPrincipalView.jwtToken;
-            await _form.proveedorService.UpdateAsync(_form.proveedorCurrent, token);
+            await _form.proveedorService.UpdateAsync(_form.proveedorCurrent);
             _form.SetState(_form.initialDisplayState);
             await _form.currentState.UpdateUI();
         }

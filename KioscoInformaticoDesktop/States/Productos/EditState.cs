@@ -35,8 +35,7 @@ namespace Desktop.States.Productos
             _form.productoCurrent.Nombre = _form.txtNombre.Text;
             _form.productoCurrent.Precio = _form.numericPrecio.Value;
 
-            var token = MenuPrincipalView.jwtToken;
-            await _form.productoService.UpdateAsync(_form.productoCurrent, token);
+            await _form.productoService.UpdateAsync(_form.productoCurrent);
             _form.SetState(_form.initialDisplayState);
             await _form.currentState.UpdateUI();
         }

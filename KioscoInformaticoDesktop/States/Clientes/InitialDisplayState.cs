@@ -26,16 +26,14 @@ namespace Desktop.States.Clientes
         public async Task UpdateUI()
         {
             await CargarCombo();
-            var token = MenuPrincipalView.jwtToken;
-            var clientes = await _form.clienteService.GetAllAsync(string.Empty, token);
+            var clientes = await _form.clienteService.GetAllAsync(string.Empty);
             _form.ListClientes.DataSource = clientes;
             _form.dataGridClientesView.DataSource = _form.ListClientes;
             _form.tabControl.SelectTab(_form.tabPageLista);
         }
         private async Task CargarCombo()
         {
-            var token = MenuPrincipalView.jwtToken;
-            _form.comboLocalidades.DataSource = await _form.localidadService.GetAllAsync(string.Empty, token);
+            _form.comboLocalidades.DataSource = await _form.localidadService.GetAllAsync(string.Empty);
             _form.comboLocalidades.DisplayMember = "Nombre";
             _form.comboLocalidades.ValueMember = "Id";
         }

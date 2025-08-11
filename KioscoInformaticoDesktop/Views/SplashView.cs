@@ -70,8 +70,7 @@ namespace KioscoInformaticoDesktop.Views
             await Task.Run(async () =>
             {
                 IGenericService<Cliente> clienteService = new GenericService<Cliente>();
-                var token = MenuPrincipalView.jwtToken;
-                var clientes = await clienteService.GetAllAsync(token, string.Empty);
+                var clientes = await clienteService.GetAllAsync(string.Empty);
                 dataReady = true;
             });
         }

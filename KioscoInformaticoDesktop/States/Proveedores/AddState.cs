@@ -36,8 +36,7 @@ namespace Desktop.States.Proveedores
                 Cbu = _form.txtCbu.Text,
                 LocalidadId = (int)_form.comboLocalidades.SelectedValue,
             };
-            var token = MenuPrincipalView.jwtToken;
-            await _form.proveedorService.AddAsync(proveedor, token);
+            await _form.proveedorService.AddAsync(proveedor);
             _form.SetState(_form.initialDisplayState);
             await _form.currentState.UpdateUI();
         }

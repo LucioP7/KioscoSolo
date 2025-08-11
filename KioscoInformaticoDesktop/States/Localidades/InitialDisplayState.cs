@@ -25,8 +25,7 @@ namespace Desktop.States.Localidades
         }
         public async Task UpdateUI()
         {
-            var token = MenuPrincipalView.jwtToken;
-            _form.listaLocalidades.DataSource = await _form.localidadService.GetAllAsync(token, _form.txtFiltro.Text);
+            _form.listaLocalidades.DataSource = await _form.localidadService.GetAllAsync(_form.txtFiltro.Text);
             _form.dataGridLocalidades.DataSource = _form.listaLocalidades;
             _form.tabControl.SelectTab(_form.tabPageLista);
         }

@@ -10,6 +10,7 @@ namespace Service.Services
         protected readonly HttpClient client;
         protected readonly JsonSerializerOptions options;
         protected readonly string _endpoint;
+        public static string jwtToken = string.Empty;
 
         public GenericService()
         {
@@ -21,18 +22,19 @@ namespace Service.Services
                 urlApi = Properties.Resources.UrlApiLocal;
 
             _endpoint = urlApi + ApiEndpoints.GetEndpoint(typeof(T).Name);
-        }
 
-        public async Task<List<T>?> GetAllAsync(string token, string? filtro = "")
-        {
-            if (!string.IsNullOrEmpty(token))
+            if (!string.IsNullOrEmpty(GenericService<object>.jwtToken))
             {
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", GenericService<object>.jwtToken);
             }
             else
             {
-                throw new ArgumentNullException(nameof(token), "Error Token no definido.");
+                throw new ArgumentNullException(nameof(GenericService<object>.jwtToken), "Error Token no definido.");
             }
+        }
+
+        public async Task<List<T>?> GetAllAsync(string? filtro = "")
+        {
             {
                 var response = await client.GetAsync($"{_endpoint}?filtro={filtro}");
                 var content = await response.Content.ReadAsStringAsync();
@@ -44,16 +46,8 @@ namespace Service.Services
             }
         }
 
-        public async Task<T?> GetByIdAsync(int id, string token)
+        public async Task<T?> GetByIdAsync(int id)
         {
-            if (!string.IsNullOrEmpty(token))
-            {
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            }
-            else
-            {
-                throw new ArgumentNullException(nameof(token), "Error Token no definido.");
-            }
             var response = await client.GetAsync($"{_endpoint}/{id}");
             var content = await response.Content.ReadAsStreamAsync();
             if (!response.IsSuccessStatusCode)
@@ -63,16 +57,8 @@ namespace Service.Services
             return JsonSerializer.Deserialize<T>(content, options);
         }
 
-        public async Task<T?> AddAsync(T? entity, string token)
+        public async Task<T?> AddAsync(T? entity)
         {
-            if (!string.IsNullOrEmpty(token))
-            {
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            }
-            else
-            {
-                throw new ArgumentNullException(nameof(token), "Error Token no definido.");
-            }
             var response = await client.PostAsJsonAsync(_endpoint, entity);
             var content = await response.Content.ReadAsStreamAsync();
             if (!response.IsSuccessStatusCode)
@@ -82,16 +68,8 @@ namespace Service.Services
             return JsonSerializer.Deserialize<T>(content, options);
         }
 
-        public async Task UpdateAsync(T? entity, string token)
+        public async Task UpdateAsync(T? entity)
         {
-            if (!string.IsNullOrEmpty(token))
-            {
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            }
-            else
-            {
-                throw new ArgumentNullException(nameof(token), "Error Token no definido.");
-            }
             var idValue = entity.GetType().GetProperty("Id").GetValue(entity);
 
             var response = await client.PutAsJsonAsync($"{_endpoint}/{idValue}", entity);
@@ -101,16 +79,8 @@ namespace Service.Services
             }
         }
 
-        public async Task DeleteAsync(int id, string token)
+        public async Task DeleteAsync(int id)
         {
-            if (!string.IsNullOrEmpty(token))
-            {
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            }
-            else
-            {
-                throw new ArgumentNullException(nameof(token), "Error Token no definido.");
-            }
             var response = await client.DeleteAsync($"{_endpoint}/{id}");
             if (!response.IsSuccessStatusCode)
             {

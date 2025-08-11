@@ -4,6 +4,7 @@ using System.Data;
 using Microsoft.Extensions.DependencyInjection;
 using KioscoInformaticoDesktop;
 using KioscoInformaticoDesktop.Views;
+using Service.Services;
 
 namespace Desktop.Views
 {
@@ -64,7 +65,7 @@ namespace Desktop.Views
                 if (user != null)
                 {
                     var token = await user.User.GetIdTokenAsync();
-                    MenuPrincipalView.jwtToken = token;
+                    GenericService<object>.jwtToken = token;
                 }
                 
             }
