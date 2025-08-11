@@ -107,7 +107,9 @@ builder.Services.AddCors(options =>
                     "https://backlucio.azurewebsites.net",
                     "https://backendlucio.azurewebsites.net",
                     "http://backendlucio.azurewebsites.net",
-                    "https://localhost:7238")
+                    "https://localhost:7238", 
+                    "https://localhost:56125",
+                    "https://localhost:56126")
             .AllowAnyHeader()
             .AllowAnyMethod());
 });

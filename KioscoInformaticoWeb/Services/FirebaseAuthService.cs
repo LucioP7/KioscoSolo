@@ -9,6 +9,7 @@ namespace Web.Services
         private const string UserIdKey = "firebaseUserId";
         public event Action OnChangeLogin;
 
+
         public FirebaseAuthService(IJSRuntime jsRuntime)
         {
             _jsRuntime = jsRuntime;
@@ -16,13 +17,13 @@ namespace Web.Services
 
         public async Task<string> SignInWithEmailPassword(string email, string password)
         {
-            var userId = await _jsRuntime.InvokeAsync<string>("firebaseAuth.signInWithEmailPassword", email, password);
-            if (userId != null)
+            var jwt = await _jsRuntime.InvokeAsync<string>("firebaseAuth.signInWithEmailPassword", email, password);
+            if (jwt != null)
             {
-                await _jsRuntime.InvokeVoidAsync("localStorageHelper.setItem", UserIdKey, userId);
+                await _jsRuntime.InvokeVoidAsync("localStorageHelper.setItem", UserIdKey, jwt);
                 OnChangeLogin?.Invoke();
             }
-            return userId;
+            return jwt;
         }
 
         public async Task<string> createUserWithEmailAndPassword(string email, string password, string displayName)

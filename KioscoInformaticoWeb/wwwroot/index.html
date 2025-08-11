@@ -48,7 +48,9 @@
                 try {
                     const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
                     console.log(userCredential);
-                    return userCredential.user.uid;
+                    const user = userCredential.user;
+                    const token = await user.getIdToken(true);
+                    return token;
                 } catch (error) {
                     console.error("Error en autenticación:", error.message);
                     return null;
@@ -66,21 +68,21 @@
                     });
                     return userCredential.user.uid;
                     // Enviar correo de verificación
-                            //user.sendEmailVerification()
-                            //    .then(() => {
-                            //        console.log('Correo de verificación enviado.');
-                            //    })
-                            //    .catch((error) => {
-                            //        console.error('Error al enviar el correo de verificación:', error);
-                            //    });
-                       
-                    
+                    //user.sendEmailVerification()
+                    //    .then(() => {
+                    //        console.log('Correo de verificación enviado.');
+                    //    })
+                    //    .catch((error) => {
+                    //        console.error('Error al enviar el correo de verificación:', error);
+                    //    });
+
+
 
                 } catch (error) {
                     console.error("Error en autenticación:", error.message);
                     return null;
                 }
-                
+
             },
 
             signOut: async function () {
