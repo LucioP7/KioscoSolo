@@ -1,74 +1,70 @@
 ﻿// wwwroot/pwa-install.js
-let deferredPrompt = null;
-let dotnetHelper = null;
+(function () {
+    let deferredPrompt = null;
+    let dotnetHelper = null;
 
-function isStandaloneDisplayMode() {
-    // Android/desktop
-    if (window.matchMedia('(display-mode: standalone)').matches) return true;
-    // iOS Safari
-    if (navigator.standalone === true) return true;
-    // Otras heurísticas (por si abre desde WebAPK)
-    if (document.referrer && document.referrer.startsWith('android-app://')) return true;
-    return false;
-}
+    function isStandaloneDisplayMode() {
+        if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) return true;
+        if (navigator.standalone === true) return true; // iOS
+        if (document.referrer && document.referrer.startsWith('android-app://')) return true;
+        return false;
+    }
 
-window.pwaInstall = {
-    init: (helper) => {
-        dotnetHelper = helper;
+    // REGISTRO INMEDIATO (evita perder el evento si llega temprano)
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        // Si el helper ya está, avisamos al componente para que muestre el botón
+        if (dotnetHelper) {
+            dotnetHelper.invokeMethodAsync('OnCanInstallChanged', true);
+        }
+    });
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            // Chrome/Edge en Android/desktop
-            e.preventDefault();
-            deferredPrompt = e;
-            if (dotnetHelper) {
-                dotnetHelper.invokeMethodAsync('OnCanInstallChanged', true);
-            }
-        });
-
-        window.addEventListener('appinstalled', () => {
-            deferredPrompt = null;
-            if (dotnetHelper) {
-                dotnetHelper.invokeMethodAsync('OnInstalled');
-            }
-        });
-
-        // Cambios en display-mode (algunas plataformas lo emiten)
-        window.matchMedia('(display-mode: standalone)').addEventListener('change', (evt) => {
-            if (dotnetHelper) {
-                dotnetHelper.invokeMethodAsync('OnInstallStateChanged', evt.matches);
-            }
-        });
-    },
-
-    isInstalled: () => {
-        return isStandaloneDisplayMode();
-    },
-
-    canInstall: () => {
-        // true si llegó el beforeinstallprompt y aún no está instalada
-        return !!deferredPrompt && !isStandaloneDisplayMode();
-    },
-
-    promptInstall: async () => {
-        if (!deferredPrompt) return 'unavailable';
-        deferredPrompt.prompt();
-        const choice = await deferredPrompt.userChoice;
-        // Chrome solo permite usar el prompt una vez
+    window.addEventListener('appinstalled', () => {
         deferredPrompt = null;
         if (dotnetHelper) {
-            dotnetHelper.invokeMethodAsync('OnCanInstallChanged', false);
+            dotnetHelper.invokeMethodAsync('OnInstalled');
         }
-        return choice.outcome; // 'accepted' | 'dismissed'
-    },
+    });
 
-    isIOS: () => {
-        const ua = window.navigator.userAgent.toLowerCase();
-        return /iphone|ipad|ipod/.test(ua);
-    },
+    // Safari viejo no soporta addEventListener en MediaQueryList
+    try {
+        const mql = window.matchMedia('(display-mode: standalone)');
+        const onChange = (evt) => dotnetHelper?.invokeMethodAsync('OnInstallStateChanged', !!evt.matches);
+        if (mql && (typeof mql.addEventListener === 'function')) {
+            mql.addEventListener('change', onChange);
+        } else if (mql && (typeof mql.addListener === 'function')) {
+            mql.addListener(onChange);
+        }
+    } catch { /* no-op */ }
 
-    isSafari: () => {
-        const ua = window.navigator.userAgent;
-        const isSafari = /^((?!chrome|android).)*safari/i.test(ua);
-        return isSafari;
-    }
-};
+    window.pwaInstall = {
+        // ahora init SOLO recibe el helper (los listeners ya están)
+        init: (helper) => {
+            dotnetHelper = helper;
+            // Si el evento ya ocurrió antes de init, reflejamos estado actual:
+            const canInstallNow = !!deferredPrompt && !isStandaloneDisplayMode();
+            helper.invokeMethodAsync('OnCanInstallChanged', canInstallNow);
+            if (isStandaloneDisplayMode()) {
+                helper.invokeMethodAsync('OnInstallStateChanged', true);
+            }
+        },
+
+        isInstalled: () => isStandaloneDisplayMode(),
+
+        canInstall: () => !!deferredPrompt && !isStandaloneDisplayMode(),
+
+        promptInstall: async () => {
+            if (!deferredPrompt) return 'unavailable';
+            deferredPrompt.prompt();
+            const choice = await deferredPrompt.userChoice;
+            // Solo se puede usar una vez
+            deferredPrompt = null;
+            dotnetHelper?.invokeMethodAsync('OnCanInstallChanged', false);
+            return choice.outcome; // 'accepted' | 'dismissed'
+        },
+
+        isIOS: () => /iphone|ipad|ipod/i.test(navigator.userAgent),
+        isSafari: () => /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+    };
+})();
